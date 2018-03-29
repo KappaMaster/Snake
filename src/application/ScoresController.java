@@ -1,11 +1,9 @@
 package application;
 
 import java.io.IOException;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -21,39 +19,36 @@ public class ScoresController {
     @FXML
     protected void buttonClicked(ActionEvent evt) throws IOException {
     	// Store button pressed
-        Button button = (Button)evt.getSource();
-        final String buttonText = button.getText();
+        Button button = (Button)evt.getSource();	// Get button pressed
+        final String buttonText = button.getText();	// Get button text
 
-        // Go Back
-        if (buttonText.equals("Back")){
-		    // get reference to the button's stage
+        // Perform action based on button text
+        if (buttonText.equals("Back")){       		// Go Back
+		    // Get the button's stage
 			Stage stage = (Stage) button.getScene().getWindow();
 			        	
         	// Create a new scene and set the stage
-			stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("Snake.fxml"))));
+			stage.setScene(							// Set new scene
+					new Scene(FXMLLoader.load(getClass().getResource("Snake.fxml"))));
+			// Display scene
 			stage.show();
         }
-        // Exit
-        else {
+        else {										// Exit
         	System.exit(0);
         }
     }
     
-    public void setTop5Names(String playerName1st, String playerName2nd, String playerName3rd, 
-    						 String playerName4th, String playerName5th){
-		this.playerName1st.setText(playerName1st);
-		this.playerName2nd.setText(playerName2nd);
-		this.playerName3rd.setText(playerName3rd);
-		this.playerName4th.setText(playerName4th);
-		this.playerName5th.setText(playerName5th);
-	}
-    
-	public void setTop5Scores(String playerScore1st, String playerScore2nd, String playerScore3rd, 
-							  String playerScore4th, String playerScore5th){
-		this.playerScore1st.setText(playerScore1st);
-		this.playerScore2nd.setText(playerScore2nd);
-		this.playerScore3rd.setText(playerScore3rd);
-		this.playerScore4th.setText(playerScore4th);
-		this.playerScore5th.setText(playerScore5th);
+    // Set scores
+    public void setTop5(String[][] top5){
+		this.playerName1st.setText(top5[0][0]);
+		this.playerName2nd.setText(top5[1][0]);
+		this.playerName3rd.setText(top5[2][0]);
+		this.playerName4th.setText(top5[3][0]);
+		this.playerName5th.setText(top5[4][0]);
+		this.playerScore1st.setText(top5[0][1]);
+		this.playerScore2nd.setText(top5[1][1]);
+		this.playerScore3rd.setText(top5[2][1]);
+		this.playerScore4th.setText(top5[3][1]);
+		this.playerScore5th.setText(top5[4][1]);
 	}
 }

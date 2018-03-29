@@ -3,8 +3,6 @@ package application;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.PrintWriter;
-
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -14,28 +12,28 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
 import javafx.stage.Stage;
 
 public class Main extends Application implements EventHandler<ActionEvent>{
 
+	// Declare loaders (Used to change scenes)
 	@FXML FXMLLoader optionsLoader = new FXMLLoader(getClass().getResource("Options.fxml"));
 	@FXML FXMLLoader scoresLoader = new FXMLLoader(getClass().getResource("Scores.fxml"));
     
+	// Launch App
 	public static void main(String[] args) {
 		launch(args);
 	}
 	
+	// What happens on launch
 	@Override
 	public void start(Stage primaryStage)throws Exception{
-
 		// Initiate stage
 		primaryStage.setTitle("Snek Game");		// Title
 		primaryStage.setOnCloseRequest(x -> {
         	Platform.exit();
         });
-		primaryStage.setResizable(false);
+		primaryStage.setResizable(false);		// Static window size
 
 		// Set stage and display
 		primaryStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("Snake.fxml"))));
@@ -45,48 +43,51 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 	// For any button press, do this
     @FXML
     protected void buttonClicked(ActionEvent evt) throws IOException {
-    	
     	// Store button pressed
-        Button button = (Button)evt.getSource();
-        final String buttonText = button.getText();
+        Button button = (Button)evt.getSource();	// Get button pressed
+        final String buttonText = button.getText();	// Save button text
 
-    	// Start Game
-        if(buttonText.matches("Start Game")){
+        // Perform action based on button text
+        if(buttonText.matches("Start Game")){		// Start Game
         	System.out.println("Start Game ");
 /// TODO : Add Game Play stage
 			//create a new scene and set the stage
 //			stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("Options.fxml"))));
 //			stage.show();
         }
-        // Options
-        else if (buttonText.equals("Options")){
-//        	// Load Scores Scene
-            Parent root = optionsLoader.load();
-        	OptionsController options = optionsLoader.getController();
-  
-        	// Set Options
-        	BufferedReader br = new BufferedReader(new FileReader("Options.txt"));
-        	options.fillComboBox();
-        	options.setComboBox(br.readLine());
-        	options.setSlider(Double.parseDouble(br.readLine()));
+        else if (buttonText.equals("Options")){     // Options
+        	// Load options scene
+            Parent root = optionsLoader.load();							// Declare root
+        	OptionsController options = optionsLoader.getController();	// Create controller
+        	options.fillComboBox();										// Fills ComboBox
         	
+        	// Set Options
+        	BufferedReader br = new BufferedReader						// Read options from file
+        					   (new FileReader("Options.txt"));			// Where to read from
+        	options.setComboBox(br.readLine());							// Store selected colour
+        	options.setSlider(Double.parseDouble(br.readLine()));		// Store selected speed
+        	
+        	// Set scene
             button.getScene().setRoot(root);
         }
-        // High Scores
-        else if (buttonText.equals("High Scores")){
+        else if (buttonText.equals("High Scores")){	// High Scores
         	// Load Scores Scene
-            Parent root = scoresLoader.load();
-        	ScoresController scores = scoresLoader.getController();
+            Parent root = scoresLoader.load();						// Declare root
+        	ScoresController scores = scoresLoader.getController();	// Create controller
         	
         	// Set High Scores
-        	String[] pNames = {"pOne", "pTwo", "pThree", "pFour", "pFive"};
-        	String[] pScores = {"555", "444", "333", "222", "111"};
-        	scores.setTop5Names(pNames[0], pNames[1], pNames[2], pNames[3], pNames[4]);
-        	scores.setTop5Scores(pScores[0], pScores[1], pScores[2], pScores[3], pScores[4]);
-          
+/// TODO: connect to database
+        	String[][] top5 = {{"pOne", "999"}, 
+        					   {"pTwo", "888"}, 
+        					   {"pThree", "777"}, 
+        					   {"pFour", "666"}, 
+        					   {"pFive","555"}};
+        	scores.setTop5(top5);
+        	
+        	// Set scene
         	button.getScene().setRoot(root);
         }
-        else {
+        else {										// Close Window
         	System.exit(0);
         }
     }

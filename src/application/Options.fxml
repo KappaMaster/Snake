@@ -27,7 +27,7 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <ComboBox fx:id="colourChoice" layoutX="272.0" layoutY="625.0" prefHeight="31.0" prefWidth="175.0" promptText="Black" />
+      <ComboBox fx:id="colourChoice" layoutX="272.0" layoutY="625.0" onMouseEntered="#fillComboBox" prefHeight="31.0" prefWidth="175.0" promptText="Black" />
       <Button layoutX="272.0" layoutY="675.0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="31.0" prefWidth="76.0" text="Reset" />
       <Button layoutX="371.0" layoutY="675.0" mnemonicParsing="false" onAction="#buttonClicked" text="Random" />
    </children>
