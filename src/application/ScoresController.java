@@ -14,8 +14,8 @@ import javafx.stage.Stage;
 public class ScoresController {
 	
 	@FXML 
-	Label playerName1st, playerName2nd, playerName3rd, playerName4th, playerName5th,
-		  playerScore1st, playerScore2nd, playerScore3rd, playerScore4th, playerScore5th;
+	private Label playerName1st, playerName2nd, playerName3rd, playerName4th, playerName5th,
+				  playerScore1st, playerScore2nd, playerScore3rd, playerScore4th, playerScore5th;
 
 	// For any button press, do this
     @FXML
@@ -39,43 +39,21 @@ public class ScoresController {
         }
     }
     
-	public void setPlayerName1st(String name) {
-		this.playerName1st.setText(name);
+    public void setTop5Names(String playerName1st, String playerName2nd, String playerName3rd, 
+    						 String playerName4th, String playerName5th){
+		this.playerName1st.setText(playerName1st);
+		this.playerName2nd.setText(playerName2nd);
+		this.playerName3rd.setText(playerName3rd);
+		this.playerName4th.setText(playerName4th);
+		this.playerName5th.setText(playerName5th);
 	}
-
-	public void setPlayerName2nd(String name) {
-		this.playerName2nd.setText(name);
-	}
-
-	public void setPlayerName3rd(String name) {
-		this.playerName3rd.setText(name);
-	}
-
-	public void setPlayerName4th(String name) {
-		this.playerName4th.setText(name);
-	}
-
-	public void setPlayerName5th(String name) {
-		this.playerName5th.setText(name);
-	}
-
-	public void setPlayerScore1st(String name) {
-		this.playerScore1st.setText(name);
-	}
-
-	public void setPlayerScore2nd(String name) {
-		this.playerScore2nd.setText(name);
-	}
-	
-	public void setPlayerScore3rd(String name) {
-		this.playerScore3rd.setText(name);
-	}
-
-	public void setPlayerScore4th(String name) {
-		this.playerScore4th.setText(name);
-	}
-
-	public void setPlayerScore5th(String name) {
-		this.playerScore5th.setText(name);
+    
+	public void setTop5Scores(String playerScore1st, String playerScore2nd, String playerScore3rd, 
+							  String playerScore4th, String playerScore5th){
+		this.playerScore1st.setText(playerScore1st);
+		this.playerScore2nd.setText(playerScore2nd);
+		this.playerScore3rd.setText(playerScore3rd);
+		this.playerScore4th.setText(playerScore4th);
+		this.playerScore5th.setText(playerScore5th);
 	}
 }
