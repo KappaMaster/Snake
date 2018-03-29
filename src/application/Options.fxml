@@ -7,26 +7,26 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Main">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.OptionsController">
    <children>
-      <ImageView fitHeight="800.0" fitWidth="800.0">
+      <ImageView fitHeight="800.0" fitWidth="800.0" layoutY="-7.0">
          <image>
             <Image url="@background.png" />
          </image>
       </ImageView>
-      <Button layoutX="723.0" layoutY="5.0" mnemonicParsing="false" onAction="#mainPageButtonClicked" prefHeight="37.0" prefWidth="72.0" text="Exit :(" />
-      <Button layoutX="174.0" layoutY="527.0" mnemonicParsing="false" onAction="#mainPageButtonClicked" prefHeight="179.0" prefWidth="72.0" text="Back" />
-      <Slider blockIncrement="1.0" layoutX="272.0" layoutY="554.0" majorTickUnit="2.0" max="13.0" min="1.0" minorTickCount="0" prefHeight="17.0" prefWidth="175.0" showTickMarks="true" value="1.0" />
+      <Button layoutX="723.0" layoutY="5.0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="37.0" prefWidth="72.0" text="Exit :(" />
+      <Button layoutX="174.0" layoutY="527.0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="179.0" prefWidth="72.0" text="Back" />
+      <Slider fx:id="speedSlider" blockIncrement="1.0" layoutX="272.0" layoutY="554.0" majorTickUnit="2.0" max="13.0" min="1.0" minorTickCount="0" prefHeight="17.0" prefWidth="175.0" showTickMarks="true" value="1.0" />
       <Label layoutX="299.0" layoutY="518.0" prefHeight="21.0" prefWidth="121.0" text="Snake Speed" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <ChoiceBox layoutX="285.0" layoutY="643.0" prefWidth="150.0" />
       <Label layoutX="324.0" layoutY="602.0" prefHeight="30.0" prefWidth="72.0" text="Colour" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
+      <ComboBox fx:id="colourChoice" layoutX="272.0" layoutY="639.0" prefHeight="31.0" prefWidth="175.0" promptText="Black" />
    </children>
 </Pane>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ScoresController">
+   <children>
+      <ImageView fitHeight="810.0" fitWidth="800.0" layoutY="-7.0">
+         <image>
+            <Image url="@background.png" />
+         </image>
+      </ImageView>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0c0c0d" height="413.0" layoutX="243.0" layoutY="277.0" stroke="BLACK" strokeType="INSIDE" width="501.0" />
+      <Button layoutX="723.0" layoutY="5.0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="37.0" prefWidth="72.0" text="Exit :(" />
+      <Button layoutX="637.0" layoutY="272.0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="67.0" prefWidth="113.0" text="Back" />
+      <Label graphicTextGap="90.0" layoutX="178.0" layoutY="241.0" prefHeight="105.0" prefWidth="470.0" text="High Scores" textAlignment="CENTER" textFill="#079e0a" underline="true">
+         <font>
+            <Font name="Comic Sans MS" size="74.0" />
+         </font>
+      </Label>
+      <Label layoutX="358.0" layoutY="350.0" prefHeight="70.0" prefWidth="150.0" text="Player" textFill="#8d8d8d" underline="true">
+         <font>
+            <Font name="Calibri" size="48.0" />
+         </font>
+      </Label>
+      <Label layoutX="558.0" layoutY="350.0" prefHeight="70.0" prefWidth="150.0" text="Score" textFill="#8d8d8d" underline="true">
+         <font>
+            <Font name="Calibri" size="48.0" />
+         </font>
+      </Label>
+      <Label layoutX="208.0" layoutY="350.0" prefHeight="70.0" prefWidth="150.0" text="Rank" textFill="#8d8d8d" underline="true">
+         <font>
+            <Font name="Calibri" size="48.0" />
+         </font>
+      </Label>
+      <Label layoutX="245.0" layoutY="405.0" prefHeight="70.0" prefWidth="113.0" text="1" textAlignment="RIGHT" textFill="#8d8d8d">
+         <font>
+            <Font name="Calibri" size="37.0" />
+         </font>
+      </Label>
+      <Label fx:id="playerName1st" layoutX="358.0" layoutY="405.0" prefHeight="70.0" prefWidth="150.0" text="Player" textFill="#8d8d8d">
+         <font>
+            <Font name="Calibri" size="37.0" />
+         </font>
+      </Label>
+      <Label fx:id="playerScore1st" layoutX="558.0" layoutY="405.0" prefHeight="70.0" prefWidth="150.0" text="0" textFill="#8d8d8d">
+         <font>
+            <Font name="Calibri" size="37.0" />
+         </font>
+      </Label>
+      <Label layoutX="245.0" layoutY="455.0" prefHeight="70.0" prefWidth="113.0" text="2" textAlignment="RIGHT" textFill="#8d8d8d">
+         <font>
+            <Font name="Calibri" size="37.0" />
+         </font>
+      </Label>
+      <Label fx:id="playerName2nd" layoutX="358.0" layoutY="455.0" prefHeight="70.0" prefWidth="150.0" text="Player" textFill="#8d8d8d">
+         <font>
+            <Font name="Calibri" size="37.0" />
+         </font>
+      </Label>
+      <Label fx:id="playerScore2nd" layoutX="558.0" layoutY="455.0" prefHeight="70.0" prefWidth="150.0" text="0" textFill="#8d8d8d">
+         <font>
+            <Font name="Calibri" size="37.0" />
+         </font>
+      </Label>
+      <Label layoutX="245.0" layoutY="505.0" prefHeight="70.0" prefWidth="113.0" text="3" textAlignment="RIGHT" textFill="#8d8d8d">
+         <font>
+            <Font name="Calibri" size="37.0" />
+         </font>
+      </Label>
+      <Label fx:id="playerName3rd" layoutX="358.0" layoutY="505.0" prefHeight="70.0" prefWidth="150.0" text="Player" textFill="#8d8d8d">
+         <font>
+            <Font name="Calibri" size="37.0" />
+         </font>
+      </Label>
+      <Label fx:id="playerScore3rd" layoutX="558.0" layoutY="505.0" prefHeight="70.0" prefWidth="150.0" text="0" textFill="#8d8d8d">
+         <font>
+            <Font name="Calibri" size="37.0" />
+         </font>
+      </Label>
+      <Label layoutX="245.0" layoutY="555.0" prefHeight="70.0" prefWidth="113.0" text="4" textAlignment="RIGHT" textFill="#8d8d8d">
+         <font>
+            <Font name="Calibri" size="37.0" />
+         </font>
+      </Label>
+      <Label fx:id="playerName4th" layoutX="358.0" layoutY="555.0" prefHeight="70.0" prefWidth="150.0" text="Player" textFill="#8d8d8d">
+         <font>
+            <Font name="Calibri" size="37.0" />
+         </font>
+      </Label>
+      <Label fx:id="playerScore4th" layoutX="558.0" layoutY="555.0" prefHeight="70.0" prefWidth="150.0" text="0" textFill="#8d8d8d">
+         <font>
+            <Font name="Calibri" size="37.0" />
+         </font>
+      </Label>
+      <Label fx:id="playerScore5th" layoutX="558.0" layoutY="605.0" prefHeight="70.0" prefWidth="150.0" text="0" textFill="#8d8d8d">
+         <font>
+            <Font name="Calibri" size="37.0" />
+         </font>
+      </Label>
+      <Label fx:id="playerName5th" layoutX="358.0" layoutY="605.0" prefHeight="70.0" prefWidth="150.0" text="Player" textFill="#8d8d8d">
+         <font>
+            <Font name="Calibri" size="37.0" />
+         </font>
+      </Label>
+      <Label layoutX="245.0" layoutY="605.0" prefHeight="70.0" prefWidth="113.0" text="5" textAlignment="RIGHT" textFill="#8d8d8d">
+         <font>
+            <Font name="Calibri" size="37.0" />
+         </font>
+      </Label>
+      <Line endX="470.0" fill="#909090" layoutX="197.0" layoutY="675.0" smooth="false" startX="15.0" stroke="#7c7c7c" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeWidth="3.0" />
+   </children>
+</Pane>

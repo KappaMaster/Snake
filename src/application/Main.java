@@ -4,87 +4,101 @@ import java.io.IOException;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.stage.Stage;
 
 public class Main extends Application implements EventHandler<ActionEvent>{
-    
-	String colour = "black";	// Game colour (default black)
-	int gameSpeed = 1;			// Game speed (1-10)
-	    
+	
+	String gameColour = "Black";	// Game colour (default black)
+	double gameSpeed = 1.0;			// Game speed (1-10)
+	
+	public static void main(String[] args) {
+		launch(args);
+	}
+	
 	@Override
 	public void start(Stage primaryStage)throws Exception{
-		
-		primaryStage.setTitle("Snek Game");
+
+		// Initiate stage
+		primaryStage.setTitle("Snek Game");		// Title
 		primaryStage.setOnCloseRequest(x -> {
         	Platform.exit();
         });
-		
 		primaryStage.setResizable(false);
+
+		// Set stage and display
 		primaryStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("Snake.fxml"))));
 		primaryStage.show();
 	}
-	
-	// For Main Menu button press, do this
+
+	// For any button press, do this
     @FXML
-    protected void mainPageButtonClicked(ActionEvent evt) throws IOException {
+    protected void buttonClicked(ActionEvent evt) throws IOException {
+    	
     	// Store button pressed
         Button button = (Button)evt.getSource();
         final String buttonText = button.getText();
 
     	// Start Game
         if(buttonText.matches("Start Game")){
-        	System.out.println("Start Game");
+        	System.out.println("Start Game ");
+		    // get reference to the button's stage
+			Stage stage = (Stage) button.getScene().getWindow();
+
+/// TODO : Add Game Play stage
+			//create a new scene and set the stage
+//			stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("Options.fxml"))));
+//			stage.show();
         }
         // Options
         else if (buttonText.equals("Options")){
-        	System.out.println("Options");
-			 
-		    // get reference to the button's stage         
-			Stage stage = (Stage) button.getScene().getWindow();
-		    
-			//create a new scene and set the stage
-			stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("Options.fxml"))));
-			stage.show();
+        	// Load Scores Scene
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Options.fxml"));
+            Parent root = loader.load();
+        	OptionsController options = loader.getController();
+  
+        	// Set High Scores
+        	options.fillComboBox();
+        	options.setComboBox(gameColour);
+        	options.setSlider(gameSpeed);
+        	
+            button.getScene().setRoot(root);
+            
         }
         // High Scores
         else if (buttonText.equals("High Scores")){
-        	System.out.println("High Scores");
-        }
-        else if (buttonText.equals("Back")){
-		    // get reference to the button's stage         
-			Stage stage = (Stage) button.getScene().getWindow();
-		    
-			//create a new scene and set the stage
-			stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("Snake.fxml"))));
-			stage.show();
+        	// Load Scores Scene
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Scores.fxml"));
+            Parent root = loader.load();
+        	ScoresController scores = loader.getController();
+        	
+        	// Set High Scores
+        	scores.setPlayerName1st("Will");
+        	scores.setPlayerScore1st("1000");
+
+            button.getScene().setRoot(root);
         }
         else {
         	System.exit(0);
         }
     }
     
-	public static void main(String[] args) {
-		launch(args);
-	}
-
 	@Override
 	public void handle(ActionEvent arg0) {
 		// TODO Auto-generated method stub
 
 	}
-
 }
 
-/* OLD CODE - TO DELETE 
+/* OLD CODE - TO DELETE
 primaryStage.setTitle("This is the window");
 StackPane layout = new StackPane();
 GridPane layout2 = new GridPane();

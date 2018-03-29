@@ -14,9 +14,9 @@
             <Image url="@background.png" />
          </image>
       </ImageView>
-      <Button layoutX="256.0" layoutY="555.0" mnemonicParsing="false" onAction="#mainPageButtonClicked" prefHeight="37.0" prefWidth="170.0" text="Start Game" />
-      <Button layoutX="256.0" layoutY="615.0" mnemonicParsing="false" onAction="#mainPageButtonClicked" prefHeight="37.0" prefWidth="170.0" text="Options" />
-      <Button layoutX="256.0" layoutY="675.0" mnemonicParsing="false" onAction="#mainPageButtonClicked" prefHeight="37.0" prefWidth="170.0" text="High Scores" />
-      <Button layoutX="723.0" layoutY="5.0" mnemonicParsing="false" onAction="#mainPageButtonClicked" prefHeight="37.0" prefWidth="72.0" text="Exit :(" />
+      <Button layoutX="256.0" layoutY="555.0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="37.0" prefWidth="170.0" text="Start Game" />
+      <Button layoutX="256.0" layoutY="615.0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="37.0" prefWidth="170.0" text="Options" />
+      <Button layoutX="256.0" layoutY="675.0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="37.0" prefWidth="170.0" text="High Scores" />
+      <Button layoutX="723.0" layoutY="5.0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="37.0" prefWidth="72.0" text="Exit :(" />
    </children>
 </Pane>
