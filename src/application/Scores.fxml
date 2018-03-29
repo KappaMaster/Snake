@@ -44,7 +44,7 @@
             <Font name="Calibri" size="37.0" />
          </font>
       </Label>
-      <Label fx:id="playerName1st" layoutX="358.0" layoutY="405.0" prefHeight="70.0" prefWidth="150.0" text="Player" textFill="#8d8d8d">
+      <Label fx:id="playerName1st" layoutX="358.0" layoutY="405.0" prefHeight="70.0" prefWidth="190.0" text="Player" textFill="#8d8d8d">
          <font>
             <Font name="Calibri" size="37.0" />
          </font>
@@ -59,7 +59,7 @@
             <Font name="Calibri" size="37.0" />
          </font>
       </Label>
-      <Label fx:id="playerName2nd" layoutX="358.0" layoutY="455.0" prefHeight="70.0" prefWidth="150.0" text="Player" textFill="#8d8d8d">
+      <Label fx:id="playerName2nd" layoutX="358.0" layoutY="455.0" prefHeight="70.0" prefWidth="190.0" text="Player" textFill="#8d8d8d">
          <font>
             <Font name="Calibri" size="37.0" />
          </font>
@@ -74,7 +74,7 @@
             <Font name="Calibri" size="37.0" />
          </font>
       </Label>
-      <Label fx:id="playerName3rd" layoutX="358.0" layoutY="505.0" prefHeight="70.0" prefWidth="150.0" text="Player" textFill="#8d8d8d">
+      <Label fx:id="playerName3rd" layoutX="358.0" layoutY="505.0" prefHeight="70.0" prefWidth="190.0" text="Player" textFill="#8d8d8d">
          <font>
             <Font name="Calibri" size="37.0" />
          </font>
@@ -89,7 +89,7 @@
             <Font name="Calibri" size="37.0" />
          </font>
       </Label>
-      <Label fx:id="playerName4th" layoutX="358.0" layoutY="555.0" prefHeight="70.0" prefWidth="150.0" text="Player" textFill="#8d8d8d">
+      <Label fx:id="playerName4th" layoutX="358.0" layoutY="555.0" prefHeight="70.0" prefWidth="190.0" text="Player" textFill="#8d8d8d">
          <font>
             <Font name="Calibri" size="37.0" />
          </font>
@@ -104,7 +104,7 @@
             <Font name="Calibri" size="37.0" />
          </font>
       </Label>
-      <Label fx:id="playerName5th" layoutX="358.0" layoutY="605.0" prefHeight="70.0" prefWidth="150.0" text="Player" textFill="#8d8d8d">
+      <Label fx:id="playerName5th" layoutX="358.0" layoutY="605.0" prefHeight="70.0" prefWidth="190.0" text="Player" textFill="#8d8d8d">
          <font>
             <Font name="Calibri" size="37.0" />
          </font>
