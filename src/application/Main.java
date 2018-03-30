@@ -3,7 +3,6 @@ package application;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -18,6 +17,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
@@ -28,29 +28,22 @@ import javafx.util.Duration;
 
 import java.util.Random;
 
+import application.Main.Direction;
+
 
 public class Main extends Application implements EventHandler<ActionEvent>{
 
+	
 	// Declare loaders (Used to change scenes)
 	@FXML FXMLLoader optionsLoader = new FXMLLoader(getClass().getResource("Options.fxml"));
 	@FXML FXMLLoader scoresLoader = new FXMLLoader(getClass().getResource("Scores.fxml"));
-	@FXML FXMLLoader gameLoader = new FXMLLoader(getClass().getResource("TestPane.fxml"));
+	@FXML FXMLLoader gameLoader = new FXMLLoader(getClass().getResource("PlayPane.fxml"));
+	@FXML Rectangle head;
 	
 	//Define an enumerable for directions
 	public enum Direction{
 		UP, DOWN, LEFT, RIGHT
 	}
-	
-	//Declare variables
-	private Direction direction = Direction.UP;
-	private boolean moved = false; 
-	private boolean running = false;
-	
-	//Create a timeline to allow animation
-	private Timeline time = new Timeline();
-	
-	//Create a base for the snake
-	private ObservableList<Node> snake;
 	
 	BufferedReader br;
 
@@ -72,8 +65,32 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 		// Set stage and display
 		primaryStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("Snake.fxml"))));
 		primaryStage.show();
+		
 	}
 
+	//For any keypress, do this:
+    @FXML
+	protected void keyPressed(KeyEvent event){
+    	System.out.println("Pressed");
+    	//Define the controls of the game
+		switch(event.getCode()){
+			case W:
+				head.setY(head.getY() - 20);
+				break;
+			case S:
+				head.setY(head.getY() + 20);
+				break;
+			case A:
+				head.setX(head.getX() - 20);
+				break;
+			case D:
+				head.setX(head.getX() + 20);
+				break;
+			default:
+				return;
+			}
+	}
+    
 	// For any button press, do this
     @FXML
     protected void buttonClicked(ActionEvent evt) throws IOException {
@@ -83,61 +100,46 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 
         // Perform action based on button text
         if(buttonText.matches("Start Game")){		// Start Game
-        	//Load game scene
-/// TODO : Add Game Play stage
+        	
+        	// Load options scene
+            Parent root = gameLoader.load();							// Declare root
+        	PlayController play = gameLoader.getController();	// Create controller
+        
 			//create a new scene and set the stage
-        	Stage gameStage =  new Stage();
-        	Scene scene = new Scene(createGame());
-			gameStage.setScene(scene);
-			
-			//Define the controls of the game
-			scene.setOnKeyPressed(event -> {
-				if(!moved){
-					return;
-				}
-					switch(event.getCode()){
-					
-					case W:
-						if(direction != Direction.DOWN){
-							direction = Direction.UP;
-						}
-						break;
-						
-					case S:
-						if(direction != Direction.UP){
-							direction = Direction.DOWN;
-						}
-						break;
-						
-					case A:
-						if(direction != Direction.RIGHT){
-							direction = Direction.LEFT;
-						}	
-						break;
-						
-					case D:
-						if(direction != Direction.LEFT){
-							direction = Direction.RIGHT;
-						}
-						break;
-						
-					default:
-						return;
-					}
-					
-				moved = false;
-				
-			});
-			
-			gameStage.setTitle("Snek Game");
-        	gameStage.show();
-        	startGame();
+        	play.createGame();
+        	play.startGame();
+        	
+        	br = new BufferedReader(new FileReader("Options.txt"));	 	// Read options from file
+        	
+        	String colour = br.readLine();								// Store colour
+        	switch(colour){
+        		case "Black":
+        			play.background.setFill(Color.BLACK);
+        			break;
+        		case "Blue":
+        			play.background.setFill(Color.LIGHTBLUE);
+        			break;
+        		case "Green":
+    				play.background.setFill(Color.DARKGREEN);
+    				break;
+        		case "Red":
+    				play.background.setFill(Color.DARKRED);
+    				break;
+        		case "White":
+    				play.background.setFill(Color.WHITE);
+    				break;
+        	}
+        	
+        	double speed = Double.parseDouble(br.readLine());			// Store speed
+        	
+        	// Set scene
+            button.getScene().setRoot(root);
         }
         else if (buttonText.equals("Options")){     // Options
         	// Load options scene
             Parent root = optionsLoader.load();							// Declare root
         	OptionsController options = optionsLoader.getController();	// Create controller
-        	options.fillComboBox();										// Fills ComboBox
+        	options.fillComboBox();								// Fills ComboBox
 
         	// Set Options
         	br = new BufferedReader(new FileReader("Options.txt"));	 	// Read options from file
@@ -180,138 +182,6 @@ public class Main extends Application implements EventHandler<ActionEvent>{
         }
     }
 
-    private Parent createGame(){
-    	
-    	//Create the scene
-    	Pane root = new Pane();
-    	root.setPrefSize(800,800);
-    	
-    	//Create random variable
-    	Random rand = new Random();
-    	
-    	//Define the body of the snake
-    	Group bodyOfSnake = new Group();
-    	snake = bodyOfSnake.getChildren();
-    	
-    	//Define the food of the snake
-    	Rectangle food = new Rectangle(20,20);
-    	food.setFill(Color.RED);
-    	food.setTranslateX(rand.nextInt(780));
-    	food.setTranslateY(rand.nextInt(780));
-    	
-    	//Create a keyframe for movement
-    	KeyFrame frame = new KeyFrame(Duration.seconds(0.1), event -> {
-    		
-    		if(!running){
-    			
-    			return;
-    		}
-    		
-    		boolean toRemove = snake.size() < 1;
-    		Node tail = toRemove ? snake.remove(snake.size()-1) : snake.get(0);
-    		
-    		//Defines the position of the tail
-    		double tailX = tail.getTranslateX();
-    		double tailY = tail.getTranslateY();
-    		
-    		//Switch statement defining movement of the snake itself
-    		switch(direction){
-    		
-    		case UP: 
-    			tail.setTranslateX(snake.get(0).getTranslateX());
-    			tail.setTranslateY(snake.get(0).getTranslateY() - 20);
-    			break;
-    			
-    		case DOWN: 
-    			tail.setTranslateX(snake.get(0).getTranslateX());
-    			tail.setTranslateY(snake.get(0).getTranslateY() + 20);
-    			break;
-    			
-    		case RIGHT:
-    			tail.setTranslateX(snake.get(0).getTranslateX() + 20);
-    			tail.setTranslateY(snake.get(0).getTranslateY());
-    			break;
-    		
-    		case LEFT:
-    			tail.setTranslateX(snake.get(0).getTranslateX() - 20);
-    			tail.setTranslateY(snake.get(0).getTranslateY());
-    			break;
-    		
-    		default:
-    			return;
-    		
-    		}
-    		
-    		moved = true;
-    		
-    		if(toRemove){
-    			
-    			snake.add(0,tail);
-    		
-    		}
-    		
-    		for(Node rect: snake){
-    			
-    			//Define death by running into yourself
-    			if(rect != tail && tail.getTranslateX() == rect.getTranslateX() 
-    					&& tail.getTranslateY() == rect.getTranslateY())
-    			{
-    				endGame();
-    				break;
-    			}
-    		}
-    			
-    			//Define what happens if you run into a wall 
-    			if(tail.getTranslateX() < 0 || tail.getTranslateX() > 800){
-    				endGame();
-    			}
-    			
-    			if(tail.getTranslateY() < 0 || tail.getTranslateY() > 800){
-    				endGame();
-    			}
-    			
-    		//Define what happens when the food is eaten
-    		if(tail.getTranslateX() == food.getTranslateX() && tail.getTranslateY() == food.getTranslateY()){
-    			
-    			food.setTranslateX(rand.nextInt(780));
-    	    	food.setTranslateY(rand.nextInt(780));
-    			
-    	    	Rectangle rect = new Rectangle(20,20);
-    	    	rect.setTranslateX(tailX);
-    	    	rect.setTranslateY(tailY);
-    	    	
-    	    	snake.add(rect);
-    	    	
-    		}
-    		
-    	});
-    	
-    	time.getKeyFrames().add(frame);
-    	time.setCycleCount(Timeline.INDEFINITE);
-    	
-    	return root;
-    }
-    
-    
-    //Ends the game and clears the existing snake
-    private void endGame(){
-    	
-    	running = false;
-    	time.stop();
-    	snake.clear();
-    	
-    }
-    
-    //Sets all variables to their deafault position and begins the timeline 
-    private void startGame()
-    {
-    	direction = Direction.UP;
-    	Rectangle head = new Rectangle(20,20);
-    	snake.add(head);
-    	time.play();
-    	running = true;
-    }
-    
 	@Override
 	public void handle(ActionEvent arg0) {
 		// TODO Auto-generated method stub

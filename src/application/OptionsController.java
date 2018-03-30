@@ -26,7 +26,7 @@ public class OptionsController {
 
 	// Colour Options
 	String[] colours = {"Black", "Blue", "Green", "Red", "White"};
-
+	
 	// For any button press, do this
     @FXML
     protected void buttonClicked(ActionEvent evt) throws IOException {
