@@ -68,6 +68,7 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 		
 	}
 
+	/* Texting Purposes, delete later */
 	//For any keypress, do this:
     @FXML
 	protected void keyPressed(KeyEvent event){
@@ -104,18 +105,11 @@ public class Main extends Application implements EventHandler<ActionEvent>{
         	// Load options scene
             Parent root = gameLoader.load();							// Declare root
         	PlayController play = gameLoader.getController();	// Create controller
-        
-			//create a new scene and set the stage
-        	play.createGame();
-        	play.startGame();
-        	
+                	
         	br = new BufferedReader(new FileReader("Options.txt"));	 	// Read options from file
         	
         	String colour = br.readLine();								// Store colour
         	switch(colour){
-        		case "Black":
-        			play.background.setFill(Color.BLACK);
-        			break;
         		case "Blue":
         			play.background.setFill(Color.LIGHTBLUE);
         			break;
@@ -128,12 +122,28 @@ public class Main extends Application implements EventHandler<ActionEvent>{
         		case "White":
     				play.background.setFill(Color.WHITE);
     				break;
+        		default:
+        			play.background.setFill(Color.BLACK);
+        			break;
         	}
-        	
         	double speed = Double.parseDouble(br.readLine());			// Store speed
+        	
+			//create a new scene and set the stage
+        	play.createGame();
+        	play.startGame();
         	
         	// Set scene
             button.getScene().setRoot(root);
+            
+            EventHandler<ActionEvent> eventHandler = e -> {
+        		play.moveSnake();
+    		};
+    	
+    		// Create an animation for a running clock
+    		Timeline animation = new Timeline(new KeyFrame(Duration.millis(speed), eventHandler));
+    		animation.setCycleCount(Timeline.INDEFINITE);
+    		animation.play(); 
+    		
         }
         else if (buttonText.equals("Options")){     // Options
         	// Load options scene
