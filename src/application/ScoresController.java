@@ -7,13 +7,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class ScoresController {
-	
-	@FXML 
+
+	@FXML
 	private Label playerName1st, playerName2nd, playerName3rd, playerName4th, playerName5th,
 				  playerScore1st, playerScore2nd, playerScore3rd, playerScore4th, playerScore5th;
+
+	@FXML Label playerRank, playerName, playerScore;
+	@FXML Pane newScorePane;
 
 	// For any button press, do this
     @FXML
@@ -26,7 +30,7 @@ public class ScoresController {
         if (buttonText.equals("Back")){       		// Go Back
 		    // Get the button's stage
 			Stage stage = (Stage) button.getScene().getWindow();
-			        	
+
         	// Create a new scene and set the stage
 			stage.setScene(							// Set new scene
 					new Scene(FXMLLoader.load(getClass().getResource("Snake.fxml"))));
@@ -37,7 +41,7 @@ public class ScoresController {
         	System.exit(0);
         }
     }
-    
+
     // Set scores
     public void setTop5(String[][] top5){
 		this.playerName1st.setText(top5[0][0]);

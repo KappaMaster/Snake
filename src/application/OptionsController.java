@@ -18,14 +18,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.stage.Stage;
 
+import static application.Main.*;
+
 public class OptionsController {
 
 	// Declare objects we want to control (object name = fx:ID)
 	@FXML private Slider speedSlider;				// Manage game Speed (1-10)
 	@FXML private ComboBox<String> colourChoice;	// Manage game Colour
-
-	// Colour Options
-	String[] colours = {"Black", "Blue", "Green", "White"};
+	@FXML private ComboBox<String> sizeChoice;		// Manage game Colour
 	
 	// For any button press, do this
     @FXML
@@ -43,6 +43,7 @@ public class OptionsController {
 			PrintWriter writer = new PrintWriter("Options.txt", "UTF-8");
 			writer.println(colourChoice.getValue());	// Store colour
 			writer.println(speedSlider.getValue());		// store speed
+			writer.println(sizeChoice.getValue());
 			writer.close();								// close writer
 
 			//create a new scene and set the stage
@@ -51,16 +52,19 @@ public class OptionsController {
 			stage.show();								// Show scene
         }
         else if (buttonText.equals("Reset")){        	// Reset Defaults
-        	setComboBox(colours[0]);					// Set combobox to default value
-        	setSlider(0.15);								// Set slider to default value
+        	setColourBox(colours[0]);					// Set combobox to default value
+        	setSizeBox(sizes[1]);						// Set combobox to default value
+        	setSlider(0.1);							// Set slider to default value
         }
         else if (buttonText.equals("Random")){		    // Randomize options
         	// Create random number generator
         	Random r = new Random();
 
         	setSlider(0.05 + r.nextDouble() * 0.15);	// Set slider to random double (0.05 and 0.2)
-        	setComboBox(								// Set combobox to random colour from colours[]
+        	setColourBox(								// Set combobox to random colour from colours[]
         			colours[r.nextInt(colours.length)]);
+	    	setSizeBox(								// Set combobox to random size from sizes[]
+	    			sizes[r.nextInt(sizes.length)]);
         }
         else {										// Close window
         	System.exit(0);
@@ -70,15 +74,19 @@ public class OptionsController {
     // Fill comboBox with colours[]
     public void fillComboBox(){
     	colourChoice.setItems(FXCollections.observableArrayList(colours));
+    	sizeChoice.setItems(FXCollections.observableArrayList(sizes));
     }
-
+    
     // Set slider value
     public void setSlider(double value){
     	speedSlider.setValue(value);
     }
 
     // Set combobox value
-    public void setComboBox(String value){
+    public void setColourBox(String value){
     	colourChoice.setValue(value);
+    }
+    public void setSizeBox(String value){
+    	sizeChoice.setValue(value);
     }
 }

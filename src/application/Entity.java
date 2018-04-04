@@ -11,14 +11,14 @@ import static application.PlayController.blockSize;
 
 public class Entity extends Pane {
 	
-	public Entity(double xPosition, double yPosition, Color color){
+	public Entity(double xPosition, double yPosition, String colour){
 		this.setTranslateX(xPosition);
 		this.setTranslateY(yPosition);
 		
 		Rectangle entity = new Rectangle(blockSize, blockSize);
-		entity.setFill(color);
-		super.getChildren().addAll(entity);
+		entity.setStyle("-fx-fill: " + colour.toUpperCase() + ";");
 		
+		super.getChildren().addAll(entity);
 	}
 
 }

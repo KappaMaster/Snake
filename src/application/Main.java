@@ -1,5 +1,7 @@
 package application;
 	
+import static application.Main.sizes;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 
@@ -22,6 +24,9 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 	@FXML FXMLLoader gameLoader = new FXMLLoader(getClass().getResource("PlayPane.fxml"));
 	
 	BufferedReader br;
+	
+	public static final String[] colours = {"Black", "Blue", "Green", "White"},
+						sizes = {"Small", "Default", "Big", "Very Big"};
 	
 	// Launch App
 	public static void main(String[] args) {
@@ -60,6 +65,7 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 
         	play.colour = br.readLine();								// Store colour
         	play.speed = Double.parseDouble(br.readLine());				// Store speed
+        	play.blockSize = size(br.readLine());						// Store Size
         	play.launch(button);
         	
             button.getScene().setRoot(root);
@@ -72,8 +78,9 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 
         	// Set Options
         	br = new BufferedReader(new FileReader("Options.txt"));	 	// Read options from file
-        	options.setComboBox(br.readLine());							// Store selected colour
+        	options.setColourBox(br.readLine());						// Store selected colour
         	options.setSlider(Double.parseDouble(br.readLine()));		// Store selected speed
+        	options.setSizeBox(br.readLine());							// Store selected Size
 
         	// Set scene
             button.getScene().setRoot(root);
@@ -110,7 +117,17 @@ public class Main extends Application implements EventHandler<ActionEvent>{
         	System.exit(0);
         }
     }
-
+    
+    public int size(String s){
+    	if (s.equals(sizes[0]))
+    		return 10;
+    	if (s.equals(sizes[1]))
+    		return 20;
+    	if (s.equals(sizes[2]))
+    		return 40;
+    	
+    	return 80;
+    }
     
 	@Override
 	public void handle(ActionEvent arg0) {

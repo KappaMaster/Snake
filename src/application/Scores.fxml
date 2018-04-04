@@ -115,5 +115,24 @@
          </font>
       </Label>
       <Line endX="470.0" fill="#909090" layoutX="197.0" layoutY="675.0" smooth="false" startX="15.0" stroke="#7c7c7c" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeWidth="3.0" />
+      <Pane fx:id="newScorePane" layoutX="210.0" layoutY="687.0" prefHeight="105.0" prefWidth="513.0" visible="false">
+         <children>
+            <Label fx:id="playerScore" layoutX="348.0" layoutY="-7.0" prefHeight="70.0" prefWidth="150.0" text="-" textFill="#8d8d8d">
+               <font>
+                  <Font name="Calibri" size="37.0" />
+               </font>
+            </Label>
+            <Label fx:id="playerName" layoutX="148.0" layoutY="-7.0" prefHeight="70.0" prefWidth="190.0" text="-" textFill="#8d8d8d">
+               <font>
+                  <Font name="Calibri" size="37.0" />
+               </font>
+            </Label>
+            <Label fx:id="playerRank" layoutX="35.0" layoutY="-7.0" prefHeight="70.0" prefWidth="113.0" text="-" textAlignment="RIGHT" textFill="#8d8d8d">
+               <font>
+                  <Font name="Calibri" size="37.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
    </children>
 </Pane>
