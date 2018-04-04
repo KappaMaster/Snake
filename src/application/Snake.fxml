@@ -12,7 +12,7 @@
    <children>
       <ImageView fitHeight="800.0" fitWidth="800.0">
          <image>
-            <Image url="@../../../../../git/Snake/src/application/background.png" />
+            <Image url="@background.png" />
          </image>
       </ImageView>
       <Button layoutX="256.0" layoutY="555.0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="37.0" prefWidth="170.0" text="Start Game" />

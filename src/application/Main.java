@@ -91,9 +91,13 @@ public class Main extends Application implements EventHandler<ActionEvent>{
                 	
         	br = new BufferedReader(new FileReader("Options.txt"));	 	// Read options from file
         	
-        	
+        	String colour = br.readLine();								// Store colour
         	double speed = Double.parseDouble(br.readLine());			// Store speed
         	
+        	Scene scene = new Scene(play.createGame(), 800, 800);
+			play.moveSnake(scene);
+			play.startGame();
+			
         	// Set scene
             button.getScene().setRoot(root);
             
