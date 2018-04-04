@@ -25,7 +25,7 @@ public class OptionsController {
 	@FXML private ComboBox<String> colourChoice;	// Manage game Colour
 
 	// Colour Options
-	String[] colours = {"Black", "Blue", "Green", "Red", "White"};
+	String[] colours = {"Black", "Blue", "Green", "White"};
 	
 	// For any button press, do this
     @FXML
@@ -52,13 +52,13 @@ public class OptionsController {
         }
         else if (buttonText.equals("Reset")){        	// Reset Defaults
         	setComboBox(colours[0]);					// Set combobox to default value
-        	setSlider(speedSlider.getMin());			// Set slider to default value
+        	setSlider(0.15);								// Set slider to default value
         }
         else if (buttonText.equals("Random")){		    // Randomize options
         	// Create random number generator
         	Random r = new Random();
 
-        	setSlider(1 + r.nextDouble() * 9);			// Set slider to random double (1-10)
+        	setSlider(0.05 + r.nextDouble() * 0.15);	// Set slider to random double (0.05 and 0.2)
         	setComboBox(								// Set combobox to random colour from colours[]
         			colours[r.nextInt(colours.length)]);
         }

@@ -9,14 +9,14 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.OptionsController">
    <children>
-      <ImageView fitHeight="800.0" fitWidth="800.0" layoutY="-7.0">
+      <ImageView fitHeight="800.0" fitWidth="800.0">
          <image>
             <Image url="@background.png" />
          </image>
       </ImageView>
       <Button layoutX="723.0" layoutY="5.0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="37.0" prefWidth="72.0" text="Exit :(" />
       <Button layoutX="174.0" layoutY="527.0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="179.0" prefWidth="72.0" text="Back" />
-      <Slider fx:id="speedSlider" blockIncrement="0.025" layoutX="272.0" layoutY="554.0" majorTickUnit="0.2" max="1.04" min="0.01" minorTickCount="1" prefHeight="17.0" prefWidth="175.0" showTickMarks="true" value="0.1" />
+      <Slider fx:id="speedSlider" blockIncrement="0.025" layoutX="272.0" layoutY="548.0" majorTickUnit="0.2" max="0.2" min="0.05" minorTickCount="1" prefHeight="17.0" prefWidth="175.0" value="0.15" />
       <Label layoutX="299.0" layoutY="518.0" prefHeight="21.0" prefWidth="121.0" text="Snake Speed" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="System Bold" size="20.0" />
@@ -30,5 +30,10 @@
       <ComboBox fx:id="colourChoice" layoutX="272.0" layoutY="625.0" onMouseEntered="#fillComboBox" prefHeight="31.0" prefWidth="175.0" promptText="Black" />
       <Button layoutX="272.0" layoutY="675.0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="31.0" prefWidth="76.0" text="Reset" />
       <Button layoutX="371.0" layoutY="675.0" mnemonicParsing="false" onAction="#buttonClicked" text="Random" />
+      <Label layoutX="282.0" layoutY="565.0" prefHeight="21.0" prefWidth="160.0" text="Fast                                       Slow" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="10.0" />
+         </font>
+      </Label>
    </children>
 </Pane>
