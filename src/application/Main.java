@@ -28,7 +28,7 @@ import javafx.util.Duration;
 
 import java.util.Random;
 
-import application.Main.Direction;
+
 
 
 public class Main extends Application implements EventHandler<ActionEvent>{
@@ -38,13 +38,7 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 	@FXML FXMLLoader optionsLoader = new FXMLLoader(getClass().getResource("Options.fxml"));
 	@FXML FXMLLoader scoresLoader = new FXMLLoader(getClass().getResource("Scores.fxml"));
 	@FXML FXMLLoader gameLoader = new FXMLLoader(getClass().getResource("PlayPane.fxml"));
-	@FXML Rectangle head;
-	
-	//Define an enumerable for directions
-	public enum Direction{
-		UP, DOWN, LEFT, RIGHT
-	}
-	
+
 	BufferedReader br;
 
 	// Launch App
@@ -68,33 +62,10 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 		
 	}
 
-	/* Texting Purposes, delete later */
-	//For any keypress, do this:
-    @FXML
-	protected void keyPressed(KeyEvent event){
-    	System.out.println("Pressed");
-    	//Define the controls of the game
-		switch(event.getCode()){
-			case W:
-				head.setY(head.getY() - 20);
-				break;
-			case S:
-				head.setY(head.getY() + 20);
-				break;
-			case A:
-				head.setX(head.getX() - 20);
-				break;
-			case D:
-				head.setX(head.getX() + 20);
-				break;
-			default:
-				return;
-			}
-	}
     
 	// For any button press, do this
     @FXML
-    protected void buttonClicked(ActionEvent evt) throws IOException {
+    protected void buttonClicked(ActionEvent evt) throws Exception {
     	// Store button pressed
         Button button = (Button)evt.getSource();	// Get button pressed
         final String buttonText = button.getText();	// Save button text
@@ -103,47 +74,30 @@ public class Main extends Application implements EventHandler<ActionEvent>{
         if(buttonText.matches("Start Game")){		// Start Game
         	
         	// Load options scene
+        	//TODO
+        	//1. Add the background back to the Snake.fxml file
+        	//2. Translate the following code for use with controllers
+        	//This initializes/starts the game (refer to solo program for details)
+        	/*
+        	Scene scene = new Scene(createGame(), 800, 800);
+			MoveSnake(scene);
+			primaryStage.setScene(scene);
+			primaryStage.show();
+			startGame();
+        	 */
+        	
             Parent root = gameLoader.load();							// Declare root
-        	PlayController play = gameLoader.getController();	// Create controller
+        	PlayController play = gameLoader.getController();			// Create controller
                 	
         	br = new BufferedReader(new FileReader("Options.txt"));	 	// Read options from file
         	
-        	String colour = br.readLine();								// Store colour
-        	switch(colour){
-        		case "Blue":
-        			play.background.setFill(Color.LIGHTBLUE);
-        			break;
-        		case "Green":
-    				play.background.setFill(Color.DARKGREEN);
-    				break;
-        		case "Red":
-    				play.background.setFill(Color.DARKRED);
-    				break;
-        		case "White":
-    				play.background.setFill(Color.WHITE);
-    				break;
-        		default:
-        			play.background.setFill(Color.BLACK);
-        			break;
-        	}
-        	double speed = Double.parseDouble(br.readLine());			// Store speed
         	
-			//create a new scene and set the stage
-        	play.createGame();
-        	play.startGame();
+        	double speed = Double.parseDouble(br.readLine());			// Store speed
         	
         	// Set scene
             button.getScene().setRoot(root);
             
-            EventHandler<ActionEvent> eventHandler = e -> {
-        		play.moveSnake();
-    		};
-    	
-    		// Create an animation for a running clock
-    		Timeline animation = new Timeline(new KeyFrame(Duration.millis(speed), eventHandler));
-    		animation.setCycleCount(Timeline.INDEFINITE);
-    		animation.play(); 
-    		
+    
         }
         else if (buttonText.equals("Options")){     // Options
         	// Load options scene
@@ -192,6 +146,7 @@ public class Main extends Application implements EventHandler<ActionEvent>{
         }
     }
 
+    
 	@Override
 	public void handle(ActionEvent arg0) {
 		// TODO Auto-generated method stub
