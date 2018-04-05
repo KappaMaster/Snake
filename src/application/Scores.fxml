@@ -18,7 +18,7 @@
       </ImageView>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0c0c0d" height="413.0" layoutX="243.0" layoutY="277.0" stroke="BLACK" strokeType="INSIDE" width="501.0" />
       <Button layoutX="723.0" layoutY="5.0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="37.0" prefWidth="72.0" text="Exit :(" />
-      <Button layoutX="637.0" layoutY="272.0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="67.0" prefWidth="113.0" text="Back" />
+      <Button layoutX="637.0" layoutY="302.0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="37.0" prefWidth="113.0" text="Back" />
       <Label graphicTextGap="90.0" layoutX="178.0" layoutY="241.0" prefHeight="105.0" prefWidth="470.0" text="High Scores" textAlignment="CENTER" textFill="#079e0a" underline="true">
          <font>
             <Font name="Comic Sans MS" size="74.0" />
@@ -114,25 +114,36 @@
             <Font name="Calibri" size="37.0" />
          </font>
       </Label>
-      <Line endX="470.0" fill="#909090" layoutX="197.0" layoutY="675.0" smooth="false" startX="15.0" stroke="#7c7c7c" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeWidth="3.0" />
-      <Pane fx:id="newScorePane" layoutX="210.0" layoutY="687.0" prefHeight="105.0" prefWidth="513.0" visible="false">
+      <Line endX="470.0" fill="#909090" layoutX="202.0" layoutY="680.0" smooth="false" startX="15.0" stroke="#7c7c7c" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeWidth="3.0" />
+      <Pane fx:id="newScorePane" layoutX="210.0" layoutY="687.0" prefHeight="105.0" prefWidth="513.0">
          <children>
-            <Label fx:id="playerScore" layoutX="348.0" layoutY="-7.0" prefHeight="70.0" prefWidth="150.0" text="-" textFill="#8d8d8d">
+            <Label fx:id="playerScore" layoutX="349.0" layoutY="7.0" prefHeight="70.0" prefWidth="150.0" text="0" textFill="#8d8d8d">
                <font>
                   <Font name="Calibri" size="37.0" />
                </font>
             </Label>
-            <Label fx:id="playerName" layoutX="148.0" layoutY="-7.0" prefHeight="70.0" prefWidth="190.0" text="-" textFill="#8d8d8d">
+            <Label fx:id="playerName" layoutX="149.0" layoutY="7.0" prefHeight="70.0" prefWidth="190.0" textFill="#8d8d8d">
                <font>
                   <Font name="Calibri" size="37.0" />
                </font>
             </Label>
-            <Label fx:id="playerRank" layoutX="35.0" layoutY="-7.0" prefHeight="70.0" prefWidth="113.0" text="-" textAlignment="RIGHT" textFill="#8d8d8d">
+            <Label fx:id="playerRank" layoutX="36.0" layoutY="7.0" prefHeight="70.0" prefWidth="113.0" textAlignment="RIGHT" textFill="#8d8d8d">
                <font>
                   <Font name="Calibri" size="37.0" />
                </font>
             </Label>
+            <Pane fx:id="inputPane" layoutX="14.0" layoutY="13.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#buttonClicked" prefHeight="57.0" prefWidth="96.0" text="Submit" />
+                  <TextField fx:id="input" layoutX="125.0" prefHeight="57.0" prefWidth="190.0" promptText="Name...">
+                     <font>
+                        <Font name="System Bold" size="27.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </Pane>
          </children>
       </Pane>
+      <Button layoutX="637.0" layoutY="259.0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="37.0" prefWidth="113.0" text="Play" />
    </children>
 </Pane>

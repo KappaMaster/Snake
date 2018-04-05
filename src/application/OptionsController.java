@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 
 import static application.Main.*;
 
+
 public class OptionsController {
 
 	// Declare objects we want to control (object name = fx:ID)
@@ -29,48 +30,55 @@ public class OptionsController {
 	
 	// For any button press, do this
     @FXML
-    protected void buttonClicked(ActionEvent evt) throws IOException {
+    protected void buttonClicked(ActionEvent evt) throws Exception {
     	// Store button pressed
         Button button = (Button)evt.getSource();	// Get button pressed
         final String buttonText = button.getText();	// Get button text
 
         // Do action based off button text
-        if (buttonText.equals("Back")){       		// Go Back
-        	// get the button's stage
-			Stage stage = (Stage) button.getScene().getWindow();
-
-			// Update Game settings (write to file)
-			PrintWriter writer = new PrintWriter("Options.txt", "UTF-8");
-			writer.println(colourChoice.getValue());	// Store colour
-			writer.println(speedSlider.getValue());		// store speed
-			writer.println(sizeChoice.getValue());
-			writer.close();								// close writer
-
-			//create a new scene and set the stage
-			stage.setScene(								// Set new scene
-					new Scene(FXMLLoader.load(getClass().getResource("Snake.fxml"))));
-			stage.show();								// Show scene
-        }
-        else if (buttonText.equals("Reset")){        	// Reset Defaults
-        	setColourBox(colours[0]);					// Set combobox to default value
-        	setSizeBox(sizes[1]);						// Set combobox to default value
-        	setSlider(0.1);							// Set slider to default value
-        }
-        else if (buttonText.equals("Random")){		    // Randomize options
-        	// Create random number generator
-        	Random r = new Random();
-
-        	setSlider(0.05 + r.nextDouble() * 0.15);	// Set slider to random double (0.05 and 0.2)
-        	setColourBox(								// Set combobox to random colour from colours[]
-        			colours[r.nextInt(colours.length)]);
-	    	setSizeBox(								// Set combobox to random size from sizes[]
-	    			sizes[r.nextInt(sizes.length)]);
-        }
-        else {										// Close window
+        if (buttonText.equals("Back"))       		// Go Back
+        	back(button);
+        else if (buttonText.equals("Reset"))        // Reset Defaults
+        	reset(button);
+        else if (buttonText.equals("Random"))		// Randomize options
+        	random(button);
+        else										// Close window
         	System.exit(0);
-        }
     }
+    private void back(Button button) throws Exception {
+    	// get the button's stage
+		Stage stage = (Stage) button.getScene().getWindow();
+	
+		// Update Game settings (write to file)
+		PrintWriter writer = new PrintWriter("Options.txt", "UTF-8");
+		writer.println(colourChoice.getValue());	// Store colour
+		writer.println(speedSlider.getValue());		// store speed
+		writer.println(sizeChoice.getValue());
+		writer.close();								// close writer
+	
+		//create a new scene and set the stage
+		stage.setScene(								// Set new scene
+				new Scene(FXMLLoader.load(getClass().getResource("Snake.fxml"))));
+		stage.show();			
+    }
+    
+    private void reset(Button button) throws Exception {
+    	setColourBox(colours[0]);					// Set combobox to default value
+    	setSizeBox(sizes[1]);						// Set combobox to default value
+    	setSlider(0.1);								// Set slider to default value
+    }
+    
+    private void random(Button button) throws Exception {
+    	// Create random number generator
+    	Random r = new Random();
 
+    	setSlider(0.05 + r.nextDouble() * 0.15);	// Set slider to random double (0.05 and 0.2)
+    	setColourBox(								// Set combobox to random colour from colours[]
+    			colours[r.nextInt(colours.length)]);
+    	setSizeBox(									// Set combobox to random size from sizes[]
+    			sizes[r.nextInt(sizes.length)]);
+    }
+    
     // Fill comboBox with colours[]
     public void fillComboBox(){
     	colourChoice.setItems(FXCollections.observableArrayList(colours));
@@ -86,6 +94,7 @@ public class OptionsController {
     public void setColourBox(String value){
     	colourChoice.setValue(value);
     }
+    
     public void setSizeBox(String value){
     	sizeChoice.setValue(value);
     }

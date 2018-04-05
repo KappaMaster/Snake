@@ -31,11 +31,13 @@ public class PlayController{
     // Graphics and display variables
 	Pane root;								// Background / Window game is drawn on
 	Stage stage;							// game stage
+	Scene scene;							// game Scene
 	Group snakeBody;						// Store body of snake
 	Entity food, head;						// Snake head and food entities
 	
     @FXML Label scoreText, lengthText;		// Text Labels
     @FXML Pane scorePane, controlsPane;		// Panels holding labels
+	@FXML FXMLLoader scoresLoader = new FXMLLoader(getClass().getResource("Scores.fxml"));
 	
     //Options
     double speed = 0.2;						// Snake Speed
@@ -54,7 +56,7 @@ public class PlayController{
     
 	public void launch(Button source) throws Exception{
 		// Create new scene
-    	Scene scene = new Scene(createGame(), 800, 800);
+    	scene = new Scene(createGame(), 800, 800);
 
     	// get reference to the button's stage
 		stage = (Stage) source.getScene().getWindow();
@@ -63,15 +65,19 @@ public class PlayController{
 		stage.setScene(scene);
 		stage.show();
 
-		MoveSnake(scene);
+		MoveSnake();
 		startGame();
 	}
 
 	private void animate(){
-		if(!running){
+		if(!running)
             return;
-        }
-
+		
+		if(direction == Direction.NEXT){
+	        moved = true;
+            return;
+		}
+		
         boolean toRemove = snake.size() > 1;
         Node tail = toRemove ? snake.remove(snake.size()-1) : snake.get(0);
 
@@ -97,13 +103,11 @@ public class PlayController{
                 tail.setTranslateX(snake.get(0).getTranslateX() + blockSize);
                 tail.setTranslateY(snake.get(0).getTranslateY());
                 break;
-            case NEXT:
-            	break;
         }
 
         //Begin the animation
         moved = true;
-
+        
         if(toRemove)
             snake.add(0, tail);
 
@@ -111,20 +115,21 @@ public class PlayController{
         for(Node rect : snake)
             if(rect != tail && tail.getTranslateX() == rect.getTranslateX() 
              				&& tail.getTranslateY() == rect.getTranslateY()){
-                restartGame();
+                endGame();
                 break;
             }
 
         //If the snake reaches the edge of the game window, spawn it at the opposite end but maintain direction
         if(tail.getTranslateX() < 0 || tail.getTranslateX() >= width 
         || tail.getTranslateY() < 0 || tail.getTranslateY() >= height)
-        	restartGame();
+        	endGame();
         
         // If snake hits food, add a new snake segment and add points
         if (tail.getTranslateX() == food.getTranslateX() && tail.getTranslateY() == food.getTranslateY()) {
             randomizeFood(food); // setting x, and y of food to random value
-            Entity bodyPart = new Entity(tailX,tailY, colour);
-            snake.add(bodyPart); //adding rectangle to snake
+            
+            snake.add(new Entity(tailX,tailY, colour)); //adding rectangle to snake
+            snake.add(new Entity(tailX,tailY, colour)); //adding rectangle to snake
             
             // Add points => 10 points + speed bonus points (0 - 15) + size bonus points (1 - 8)
             score += 10 + (20 - 100 * speed) + (10 * blockSize/100);	
@@ -196,7 +201,7 @@ public class PlayController{
     }
 
     //Method assigning keys to the directions of the snake's movement
-    private void MoveSnake(Scene scene){
+    private void MoveSnake()  throws IOException{
     	scene.setOnKeyPressed(event -> {
             if (!moved)
                 return;
@@ -226,19 +231,11 @@ public class PlayController{
 	            	restartGame();
 	                break;
 	            case Q:
-	    			//create a new scene and set the stage
-	            	try {
-	            		stage.setScene(							// Set new scene
-	            				new Scene(FXMLLoader.load(getClass().getResource("Snake.fxml"))));
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-	    			stage.show();								// Show scene							// Show scene
+	    			endGame();
 	            	break;
 	            case P:
 	            	direction = direction.NEXT;
 	            	break;
-	            	
             }
 
             moved = false;
@@ -246,9 +243,40 @@ public class PlayController{
     	});
     }
 
+    private void endGame(){
+    	stopGame();
+    	//create a new scene and set the stage
+    	try {
+    		// Load Scores Scene
+            Parent root = scoresLoader.load();							// Declare root
+        	ScoresController scores = scoresLoader.getController();		// Create controller
+        	
+        	// Print High Scores
+        	scores.setTop5();
+        	scores.playerScore.setText("" + score);
+        	scores.newScorePane.setVisible(true);
+        	scores.inputPane.setVisible(true);
+
+        	// Set scene
+        	scene.setRoot(root);							// Makes scene visible
+    	} catch (IOException e) {
+			e.printStackTrace();
+		}
+    }
     //Method that randomizes the location of the food on each spawn
     private void randomizeFood(Entity food){
-    	food.setTranslateX( (int) (Math.random() * ( width - blockSize)) / blockSize * blockSize);
-        food.setTranslateY( (int) (Math.random() * (height - blockSize)) / blockSize * blockSize);
+    	boolean collision;
+    	// prevent food from spawning inside snake
+    	do{
+    		collision = false;
+    		food.setTranslateX( (int) (Math.random() * ( width - blockSize)) / blockSize * blockSize);
+    		food.setTranslateY( (int) (Math.random() * (height - blockSize)) / blockSize * blockSize);
+    		
+    		// If food spawns inside snake, collision
+    		for(Node rect : snake)
+            	if (rect.getTranslateX() == food.getTranslateX() 
+            	&& rect.getTranslateY() == food.getTranslateY())
+            		collision = true;
+    	} while (collision);
     }
 }
