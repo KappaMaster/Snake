@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.PlayController">
+   <children>
+      <Pane fx:id="scorePane" layoutX="14.0" layoutY="162.0" opacity="0.64" prefHeight="57.0" prefWidth="145.0">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="57.0" opacity="0.22" stroke="BLACK" strokeType="INSIDE" width="146.0" />
+            <Label layoutX="7.0" layoutY="28.0" text="Score:">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="7.0" layoutY="1.0" text="Length:">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="lengthText" layoutX="85.0" layoutY="1.0" prefHeight="27.0" prefWidth="52.0" text="1" textFill="#6f6f6f">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="scoreText" layoutX="85.0" layoutY="28.0" prefHeight="27.0" prefWidth="52.0" text="0" textFill="#6f6f6f">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane fx:id="controlsPane" layoutX="14.0" layoutY="14.0" opacity="0.64" prefHeight="130.0" prefWidth="195.0">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="131.0" opacity="0.22" stroke="BLACK" strokeType="INSIDE" width="196.0" />
+            <Label layoutX="20.0" layoutY="25.0" prefHeight="27.0" prefWidth="250.0" text="Move with W, A, S, D">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="7.0" layoutY="1.0" text="Controls">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="20.0" layoutY="75.0" prefHeight="27.0" prefWidth="250.0" text="Press R to Reset">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="20.0" layoutY="100.0" prefHeight="27.0" prefWidth="250.0" text="Press Q to Quit">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="20.0" layoutY="50.0" prefHeight="27.0" prefWidth="250.0" text="Press P to Pause">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </children>
+</Pane>
