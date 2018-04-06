@@ -1,7 +1,6 @@
 package application;
 
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -31,16 +30,16 @@ public class DatabaseUse {
 				oldScore = Integer.parseInt(set.getString(1));
 
 			// Record with largest score is added into the database
-			if (oldScore < score){
+			if (oldScore < score)
 				statement.execute("REPLACE INTO Scores (name, score) VALUES ('" + name +"' , '" + score +"')");
-			}
+
 
 			// Get Rank (Loop until rank is found, or not found)
 			set = statement.executeQuery(sql);
-			while(set.next()){
+			while(set.next())
 				if (name.contentEquals(set.getString("name")))		// If name = name in Database
 					rank = set.getRow();							// Rank = row number
-			}
+
 			// Close connections
 			statement.close();
 			conn.close();
