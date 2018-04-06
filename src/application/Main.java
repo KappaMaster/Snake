@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -17,14 +16,21 @@ import javafx.stage.Stage;
 public class Main extends Application implements EventHandler<ActionEvent>{
 
 	// Declare loaders (Used to change scenes)
-	@FXML FXMLLoader optionsLoader = new FXMLLoader(getClass().getResource("Options.fxml"));
-	@FXML FXMLLoader scoresLoader = new FXMLLoader(getClass().getResource("Scores.fxml"));
-	@FXML FXMLLoader gameLoader = new FXMLLoader(getClass().getResource("PlayPane.fxml"));
+	@FXML private FXMLLoader startLoader = new FXMLLoader(getClass().getResource("Snake.fxml")),
+					 		 optionsLoader = new FXMLLoader(getClass().getResource("Options.fxml")),
+					 		 scoresLoader = new FXMLLoader(getClass().getResource("Scores.fxml")),
+					 		 gameLoader = new FXMLLoader(getClass().getResource("PlayPane.fxml"));
 
+	// File reader
 	BufferedReader br;
 
-	public static final String[] colours = {"Black", "Blue", "Green", "White", "Purple", "Brown"},
-			sizes = {"Small", "Default", "Big", "Very Big"};
+	// String arrays for options combo boxes (Can be added to or removed from here)
+	public static final String[] colours = {"Black", "Blue", "Brown", "Green", "Gold", "Purple"},
+								 sizes = {"Small", "Default", "Big", "Very Big"};
+
+	// Window Size
+	public static final int width = 800,	// Define the dimensions of the game window
+							height = 800;
 
 	// Launch App
 	public static void main(String[] args) {
@@ -36,36 +42,17 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 	public void start(Stage primaryStage)throws Exception{
 		// Initiate stage
 		primaryStage.setTitle("Snek Game");			// Title
-		primaryStage.setOnCloseRequest(x -> {
-			Platform.exit();
-		});
 		primaryStage.setResizable(false);			// Static window size
 
 		// Set stage and display
-		primaryStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("Snake.fxml"))));
+		primaryStage.setScene(new Scene(startLoader.load()));
 		primaryStage.show();
 
+		// Initialize Database
 		DatabaseUse.initialize();
 	}
 
-	// For any button press, do this
-	@FXML
-	public void buttonClicked(ActionEvent evt) throws Exception { //MAKING THIS TATIC
-		// Store button pressed
-		Button button = (Button)evt.getSource();	// Get button pressed
-		final String buttonText = button.getText();	// Save button text
-
-		// Perform action based on button text
-		if(buttonText.matches("Start Game"))		// Start Game
-			start(button);
-		else if (buttonText.equals("Options"))     	// Options
-			options(button);
-		else if (buttonText.equals("High Scores"))	// High Scores
-			scores(button);
-		else									// Close Window
-			System.exit(0);
-	}
-
+	// Calculate blocksize
 	public static int size(String s){
 		if (s.equals(sizes[0]))
 			return 10;
@@ -77,53 +64,77 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 		return 80;
 	}
 
+	// Launch game play scene
 	private void start(Button button) throws Exception {
 		br = new BufferedReader(new FileReader("Options.txt"));	 	// Read options from file
 
-		Parent root = gameLoader.load();
-		PlayController play = gameLoader.getController();			// Create controller
+		// Load game controller
+		Parent root = gameLoader.load();							// Declare root
+		PlayController play = gameLoader.getController();
 
+		// Initiate Game
 		play.colour = br.readLine();								// Store Colour
 		play.speed = Double.parseDouble(br.readLine());				// Store Speed
-		PlayController.blockSize = size(br.readLine());				// Store Size
+		play.blockSize = size(br.readLine());						// Store Size
 		play.infiniteWindow = Boolean.parseBoolean(br.readLine());	// Store Border rules
-		play.launch(button);
+		play.launch(button);										// Launch Game
 
+		// Set scene Visible
 		button.getScene().setRoot(root);
 	}
 
+	// Launch option scene
 	private void options(Button button) throws Exception{
-		// Load options scene
-		Parent root = optionsLoader.load();							// Declare root
+		// Load options controller
+		Parent root = optionsLoader.load();
 		OptionsController options = optionsLoader.getController();	// Create controller
-		options.fillComboBox();								// Fills ComboBox
 
 		// Set Options
 		br = new BufferedReader(new FileReader("Options.txt"));	 	// Read options from file
-		options.setColourBox(br.readLine());						// Store selected colour
-		options.setSlider(Double.parseDouble(br.readLine()));		// Store selected speed
-		options.setSizeBox(br.readLine());							// Store selected Size
-		options.setCheckBox(br.readLine());
+		options.fillComboBox();										// Fill ComboBoxes
+		options.setColourBox(br.readLine());						// Get Colour
+		options.setSlider(Double.parseDouble(br.readLine()));		// Get Speed
+		options.setSizeBox(br.readLine());							// Get Size
+		options.setCheckBox(Boolean.parseBoolean(br.readLine()));	// Get Border Rule
 
-		// Set scene
+		// Set Scene Visible
 		button.getScene().setRoot(root);
 	}
 
+	// Launch scores scene
 	private void scores(Button button) throws Exception{
-		// Load Scores Scene
+		// Load Scores Controller
 		Parent root = scoresLoader.load();							// Declare root
-		ScoresController scores = scoresLoader.getController();		// Create controller
+		ScoresController scores = scoresLoader.getController();
 
 		// Print High Scores
-		scores.setTop5();
-		scores.newScorePane.setVisible(false);
+		scores.setTop5();											// Fills top 5 labels
+		scores.newScorePane.setVisible(false);						// New Score pane is hidden
 
-		// Set scene
-		button.getScene().setRoot(root);							// Makes scene visible
+		// Make Scene Visible
+		button.getScene().setRoot(root);
 	}
-	@Override
-	public void handle(ActionEvent arg0) {
-		// TODO Auto-generated method stub
 
+	// For any button press, do this
+	@Override
+	public void handle(ActionEvent evt) {
+		try{
+			// Store button pressed
+			Button button = (Button)evt.getSource();		// Get button pressed
+			final String buttonText = button.getText();		// Save button text
+
+			// Perform action based on button text
+			if(buttonText.matches("Start Game"))			// Start Game
+				start(button);
+			else if (buttonText.equals("Options"))     		// Options
+				options(button);
+			else if (buttonText.equals("High Scores"))		// High Scores
+				scores(button);
+			else											// Close Window
+				System.exit(0);
+		}
+		catch (Exception e){
+			System.out.println("Something went wrong: " + e.getMessage());
+		}
 	}
 }

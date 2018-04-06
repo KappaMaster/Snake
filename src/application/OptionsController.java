@@ -1,7 +1,6 @@
 package application;
 
-import static application.Main.colours;
-import static application.Main.sizes;
+import static application.Main.*;
 
 import java.io.PrintWriter;
 import java.util.Random;
@@ -10,22 +9,22 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
-import javafx.stage.Stage;
 
 
 public class OptionsController {
-
 	// Declare objects we want to control (object name = fx:ID)
-	@FXML private Slider speedSlider;				// Manage game speed (1-10)
 	@FXML private ComboBox<String> colourChoice;	// Manage game colour
 	@FXML private ComboBox<String> sizeChoice;		// Manage game size
 	@FXML private CheckBox check;					// Manage border rules
-
+	@FXML private Slider speedSlider;				// Manage game speed (1-10)
+	
+	// Loader
+	@FXML public FXMLLoader startLoader = new FXMLLoader(getClass().getResource("Snake.fxml"));
+	
 	// For any button press, do this
 	@FXML
 	protected void buttonClicked(ActionEvent evt) throws Exception {
@@ -43,50 +42,41 @@ public class OptionsController {
 		else										// Close window
 			System.exit(0);
 	}
+	
 	private void back(Button button) throws Exception {
-		// get the button's stage
-		Stage stage = (Stage) button.getScene().getWindow();
-
 		// Update Game settings (write to file)
 		PrintWriter writer = new PrintWriter("Options.txt", "UTF-8");
 		writer.println(colourChoice.getValue());	// Store colour
-		writer.println(speedSlider.getValue());		// store speed
-		writer.println(sizeChoice.getValue());
-		writer.println(check.isSelected());
+		writer.println(speedSlider.getValue());		// Store speed
+		writer.println(sizeChoice.getValue());		// Store size
+		writer.println(check.isSelected());			// Store border rules
 		writer.close();								// close writer
 
 		//create a new scene and set the stage
-		stage.setScene(								// Set new scene
-				new Scene(FXMLLoader.load(getClass().getResource("Snake.fxml"))));
-		stage.show();
+		button.getScene().setRoot(startLoader.load());
 	}
 
 	private void reset(Button button) throws Exception {
-		setColourBox(colours[0]);					// Set combobox to default value
-		setSizeBox(sizes[1]);						// Set combobox to default value
-		setSlider(0.1);								// Set slider to default value
+		setColourBox(colours[0]);					// Set Combobox to default value
+		setSizeBox(sizes[1]);						// Set Combobox to default value
+		setSlider(0.1);								// Set Slider to default value
+		check.setSelected(false);					// Set Checkbox to unchecked
 	}
 
 	private void random(Button button) throws Exception {
 		// Create random number generator
 		Random r = new Random();
 
-		setSlider(0.05 + r.nextDouble() * 0.15);	// Set slider to random double (0.05 and 0.2)
-		setColourBox(								// Set combobox to random colour from colours[]
-				colours[r.nextInt(colours.length)]);
-		setSizeBox(									// Set combobox to random size from sizes[]
-				sizes[r.nextInt(sizes.length)]);
-
-		if(r.nextInt(2) == 1)						// Set checkboc to randomly be selected or not
-			check.setSelected(true);
-		else
-			check.setSelected(false);
+		setSlider(0.05 + r.nextDouble() * 0.15);			// Set slider to random double (0.05 and 0.2)
+		setColourBox(colours[r.nextInt(colours.length)]);	// Set Combobox to random colour from colours[]
+		setSizeBox(sizes[r.nextInt(sizes.length)]);			// Set Combobox to random size from sizes[]
+		check.setSelected(r.nextBoolean());					// Set Checkbox to randomly be selected or not
 	}
 
-	// Fill comboBox with colours[]
+	// Fill comboBoxes
 	public void fillComboBox(){
-		colourChoice.setItems(FXCollections.observableArrayList(colours));
-		sizeChoice.setItems(FXCollections.observableArrayList(sizes));
+		colourChoice.setItems(FXCollections.observableArrayList(colours));	// Fill Colours
+		sizeChoice.setItems(FXCollections.observableArrayList(sizes));		// Fill Sizes
 	}
 
 	// Set slider value
@@ -94,17 +84,18 @@ public class OptionsController {
 		speedSlider.setValue(value);
 	}
 
-	// Set combobox value
+	// Set colour combobox value
 	public void setColourBox(String value){
 		colourChoice.setValue(value);
 	}
 
+	// Set size combobox value
 	public void setSizeBox(String value){
 		sizeChoice.setValue(value);
 	}
 
-	// Check checkbox value
-	public void setCheckBox(String value){
-		check.setSelected(Boolean.parseBoolean(value));
+	// Set checkbox value
+	public void setCheckBox(boolean value){
+		check.setSelected(value);
 	}
 }
