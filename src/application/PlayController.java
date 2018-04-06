@@ -43,6 +43,7 @@ public class PlayController{
 	//Options
 	double speed = 0.2;						// Snake Speed
 	String colour = "Black";				// Snake Colour
+	boolean infiniteWindow = false;			// Whether the window edge will kill you
 
 	//Score
 	int score = 0;
@@ -88,22 +89,26 @@ public class PlayController{
 
 		//Define what occurs when each direction is used
 		switch (direction) {
-		case UP:
-			tail.setTranslateX(snake.get(0).getTranslateX());
-			tail.setTranslateY(snake.get(0).getTranslateY() - blockSize);
-			break;
-		case DOWN:
-			tail.setTranslateX(snake.get(0).getTranslateX());
-			tail.setTranslateY(snake.get(0).getTranslateY() + blockSize);
-			break;
-		case LEFT:
-			tail.setTranslateX(snake.get(0).getTranslateX() - blockSize);
-			tail.setTranslateY(snake.get(0).getTranslateY());
-			break;
-		case RIGHT:
-			tail.setTranslateX(snake.get(0).getTranslateX() + blockSize);
-			tail.setTranslateY(snake.get(0).getTranslateY());
-			break;
+			case UP:
+				tail.setTranslateX(snake.get(0).getTranslateX());
+				tail.setTranslateY(snake.get(0).getTranslateY() - blockSize);
+				break;
+			case DOWN:
+				tail.setTranslateX(snake.get(0).getTranslateX());
+				tail.setTranslateY(snake.get(0).getTranslateY() + blockSize);
+				break;
+			case LEFT:
+				tail.setTranslateX(snake.get(0).getTranslateX() - blockSize);
+				tail.setTranslateY(snake.get(0).getTranslateY());
+				break;
+			case RIGHT:
+				tail.setTranslateX(snake.get(0).getTranslateX() + blockSize);
+				tail.setTranslateY(snake.get(0).getTranslateY());
+				break;
+			default:
+				tail.setTranslateX(snake.get(0).getTranslateX());
+				tail.setTranslateY(snake.get(0).getTranslateY());
+				break;
 		}
 
 		//Begin the animation
@@ -119,10 +124,21 @@ public class PlayController{
 				endGame();
 				break;
 			}
-
-		//If the snake reaches the edge of the game window, spawn it at the opposite end but maintain direction
-		if(tail.getTranslateX() < 0 || tail.getTranslateX() >= width
-				|| tail.getTranslateY() < 0 || tail.getTranslateY() >= height)
+		
+		// What to do if the snake hits the border
+		if(infiniteWindow){ 	// Spawn it at the opposite end, maintain direction
+			if(tail.getTranslateX() < 0)
+				tail.setTranslateX(width);
+			else if (tail.getTranslateX() > width)
+				tail.setTranslateX(0);
+			else if (tail.getTranslateY() < 0)
+				tail.setTranslateY(height);
+			else if (tail.getTranslateY() > height)
+				tail.setTranslateY(0);
+		}
+		else 					// End Game
+			if(tail.getTranslateX() < 0 || tail.getTranslateX() >= width
+			 || tail.getTranslateY() < 0 || tail.getTranslateY() >= height)
 			endGame();
 
 		// If snake hits food, add a new snake segment and add points
@@ -133,8 +149,16 @@ public class PlayController{
 			snake.add(new Entity(tailX,tailY, colour)); //adding rectangle to snake
 
 			// Add points => 10 points + speed bonus points (0 - 15) + size bonus points (1 - 8)
-			score += 10 + (20 - 100 * speed) + (10 * blockSize/100);
-
+			int points = (int) (10 + (20 - 100 * speed) + (10 * blockSize/100));
+			
+			// Half points if infinite window selected
+			if (infiniteWindow)
+				points /= 2;
+			
+			// Add to score
+			score += points;
+			
+			// Update display
 			lengthText.setText("" + snake.size());
 			scoreText.setText("" + score);
 		}
@@ -202,41 +226,43 @@ public class PlayController{
 	}
 
 	//Method assigning keys to the directions of the snake's movement
-	private void MoveSnake()  throws IOException{
+	private void MoveSnake() throws IOException{
 		scene.setOnKeyPressed(event -> {
 			if (!moved)
 				return;
 
 			switch (event.getCode()) {
-			case UP:
-			case W:
-				if (direction != Direction.DOWN)
-					direction = Direction.UP;
-				break;
-			case DOWN:
-			case S:
-				if(direction != Direction.UP)
-					direction = Direction.DOWN;
-				break;
-			case LEFT:
-			case A:
-				if(direction != Direction.RIGHT)
-					direction = Direction.LEFT;
-				break;
-			case RIGHT:
-			case D:
-				if(direction != Direction.LEFT)
-					direction = Direction.RIGHT;
-				break;
-			case R:
-				restartGame();
-				break;
-			case Q:
-				endGame();
-				break;
-			case P:
-				direction = Direction.NEXT;
-				break;
+				case UP:
+				case W:
+					if (direction != Direction.DOWN)
+						direction = Direction.UP;
+					break;
+				case DOWN:
+				case S:
+					if(direction != Direction.UP)
+						direction = Direction.DOWN;
+					break;
+				case LEFT:
+				case A:
+					if(direction != Direction.RIGHT)
+						direction = Direction.LEFT;
+					break;
+				case RIGHT:
+				case D:
+					if(direction != Direction.LEFT)
+						direction = Direction.RIGHT;
+					break;
+				case R:
+					restartGame();
+					break;
+				case Q:
+					endGame();
+					break;
+				case P:
+					direction = Direction.NEXT;
+					break;
+				default:
+					break;
 			}
 
 			moved = false;

@@ -41,5 +41,10 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
+      <CheckBox fx:id="check" layoutX="484.0" layoutY="545.0" mnemonicParsing="false" text="No Borders" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </CheckBox>
    </children>
 </Pane>

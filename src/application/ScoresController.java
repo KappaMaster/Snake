@@ -56,8 +56,8 @@ public class ScoresController {
 
 		// Fill labels from database
 		for (int i = 0; i < players.length; i+= 2)	{				// 5 rows
-			players[i].setText(DatabaseUse.getName(i/2));			// Add line to top5
-			players[i+1].setText(Integer.toString(DatabaseUse.getScore(i/2)));
+			players[i].setText(DatabaseUse.getRecord(i/2, "name"));			// Add line to top5
+			players[i+1].setText(DatabaseUse.getRecord(i/2, "score"));
 		}
 	}
 
@@ -88,14 +88,12 @@ public class ScoresController {
 	private void submit(Button button) throws Exception {
 		// Get Input
 		String name = input.getText();							// Player Name
-		String rank = "0";										// Rank
 		int score = Integer.parseInt(playerScore.getText());	// Score
 
 		// Make input pane invisible and update info
 		playerName.setText(name);
-		playerRank.setText(rank);
+		playerRank.setText(DatabaseUse.add(name, score) + "");
 		inputPane.setVisible(false);
-		DatabaseUse.add(name, score);
 	
 	}
 }

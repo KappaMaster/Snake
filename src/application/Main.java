@@ -83,9 +83,10 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 		Parent root = gameLoader.load();
 		PlayController play = gameLoader.getController();			// Create controller
 
-		play.colour = br.readLine();								// Store colour
-		play.speed = Double.parseDouble(br.readLine());				// Store speed
-		PlayController.blockSize = size(br.readLine());						// Store Size
+		play.colour = br.readLine();								// Store Colour
+		play.speed = Double.parseDouble(br.readLine());				// Store Speed
+		PlayController.blockSize = size(br.readLine());				// Store Size
+		play.infiniteWindow = Boolean.parseBoolean(br.readLine());	// Store Border rules
 		play.launch(button);
 
 		button.getScene().setRoot(root);
@@ -102,6 +103,7 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 		options.setColourBox(br.readLine());						// Store selected colour
 		options.setSlider(Double.parseDouble(br.readLine()));		// Store selected speed
 		options.setSizeBox(br.readLine());							// Store selected Size
+		options.setCheckBox(br.readLine());
 
 		// Set scene
 		button.getScene().setRoot(root);

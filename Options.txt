@@ -1,3 +1,4 @@
-Black
-0.1
-Default
+White
+0.0992537313432836
+Big
+false

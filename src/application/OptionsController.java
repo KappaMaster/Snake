@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
 import javafx.stage.Stage;
@@ -20,9 +21,10 @@ import javafx.stage.Stage;
 public class OptionsController {
 
 	// Declare objects we want to control (object name = fx:ID)
-	@FXML private Slider speedSlider;				// Manage game Speed (1-10)
-	@FXML private ComboBox<String> colourChoice;	// Manage game Colour
-	@FXML private ComboBox<String> sizeChoice;		// Manage game Colour
+	@FXML private Slider speedSlider;				// Manage game speed (1-10)
+	@FXML private ComboBox<String> colourChoice;	// Manage game colour
+	@FXML private ComboBox<String> sizeChoice;		// Manage game size
+	@FXML private CheckBox check;					// Manage border rules
 
 	// For any button press, do this
 	@FXML
@@ -50,6 +52,7 @@ public class OptionsController {
 		writer.println(colourChoice.getValue());	// Store colour
 		writer.println(speedSlider.getValue());		// store speed
 		writer.println(sizeChoice.getValue());
+		writer.println(check.isSelected());
 		writer.close();								// close writer
 
 		//create a new scene and set the stage
@@ -73,6 +76,11 @@ public class OptionsController {
 				colours[r.nextInt(colours.length)]);
 		setSizeBox(									// Set combobox to random size from sizes[]
 				sizes[r.nextInt(sizes.length)]);
+
+		if(r.nextInt(2) == 1)						// Set checkboc to randomly be selected or not
+			check.setSelected(true);
+		else
+			check.setSelected(false);
 	}
 
 	// Fill comboBox with colours[]
@@ -93,5 +101,10 @@ public class OptionsController {
 
 	public void setSizeBox(String value){
 		sizeChoice.setValue(value);
+	}
+
+	// Check checkbox value
+	public void setCheckBox(String value){
+		check.setSelected(Boolean.parseBoolean(value));
 	}
 }
