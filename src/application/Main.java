@@ -43,7 +43,7 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 		// Initiate stage
 		primaryStage.setTitle("Snek Game");			// Title
 		primaryStage.setResizable(false);			// Static window size
-
+		
 		// Set stage and display
 		primaryStage.setScene(new Scene(startLoader.load()));
 		primaryStage.show();

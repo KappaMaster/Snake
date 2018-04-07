@@ -18,6 +18,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -44,7 +45,8 @@ public class PlayController{
 	//Options
 	double speed = 0.2;						// Snake Speed
 	String colour = "Black";				// Snake Colour
-	boolean infiniteWindow = false;			// Whether the window edge will kill you
+	boolean infiniteWindow = false,			// Whether the window edge will kill you
+			paused = false;
 
 	//Score
 	int score = 0;
@@ -77,8 +79,8 @@ public class PlayController{
 		if(!running)
 			return;
 
-		// Skip if game is paused (NEXT = paused)
-		if(direction == Direction.NEXT){
+		// Skip if game is paused
+		if(paused){
 			moved = true;
 			return;
 		}
@@ -107,10 +109,6 @@ public class PlayController{
 				break;
 			case RIGHT:
 				tail.setTranslateX(snake.get(0).getTranslateX() + blockSize);
-				tail.setTranslateY(snake.get(0).getTranslateY());
-				break;
-			default:		// Position stays static
-				tail.setTranslateX(snake.get(0).getTranslateX());
 				tail.setTranslateY(snake.get(0).getTranslateY());
 				break;
 		}
@@ -175,7 +173,6 @@ public class PlayController{
 	private Parent createGame() throws Exception{
 		//Create an new pane to design the scene, and set its dimensions
 		root = new Pane();
-		//root.setStyle("-fx-background: " + colour.toUpperCase() + ";");
 		root.setPrefSize(width, height);
 		getRootX = root.getTranslateX();
 		getRootY = root.getTranslateY();
@@ -212,6 +209,7 @@ public class PlayController{
 		snake.add(head);											// Add body to head
 		time.play();												// Start animation
 		running = true;												// Program is running
+		paused = false;												// Unpause game
 	}
 
 	//Method that restarts the game
@@ -236,40 +234,46 @@ public class PlayController{
 	//Method assigning keys to the directions of the snake's movement
 	private void MoveSnake() throws IOException{
 		scene.setOnKeyPressed(event -> {
+			// Do nothing if snake hasn't moved yet
 			if (!moved)
 				return;
-
+			
+			// If pressed P, pause game
+			if (event.getCode().equals(KeyCode.P))
+				paused = !paused;					// Toggle state of boolean
+			
+			// If game is not paused, change direction
+			if(!paused)
+				switch (event.getCode()) {
+					case UP:
+					case W:
+						if (direction != Direction.DOWN)
+							direction = Direction.UP;
+						break;
+					case DOWN:
+					case S:
+						if(direction != Direction.UP)
+							direction = Direction.DOWN;
+						break;
+					case LEFT:
+					case A:
+						if(direction != Direction.RIGHT)
+							direction = Direction.LEFT;
+						break;
+					case RIGHT:
+					case D:
+						if(direction != Direction.LEFT)
+							direction = Direction.RIGHT;
+						break;
+				}
+			
+			// Do action on these keycodes regardless of pause state
 			switch (event.getCode()) {
-				case UP:
-				case W:
-					if (direction != Direction.DOWN)
-						direction = Direction.UP;
-					break;
-				case DOWN:
-				case S:
-					if(direction != Direction.UP)
-						direction = Direction.DOWN;
-					break;
-				case LEFT:
-				case A:
-					if(direction != Direction.RIGHT)
-						direction = Direction.LEFT;
-					break;
-				case RIGHT:
-				case D:
-					if(direction != Direction.LEFT)
-						direction = Direction.RIGHT;
-					break;
 				case R:
 					restartGame();
 					break;
 				case Q:
 					endGame();
-					break;
-				case P:
-					direction = Direction.NEXT;
-					break;
-				default:
 					break;
 			}
 
