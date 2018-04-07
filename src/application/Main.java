@@ -1,7 +1,10 @@
 package application;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -40,6 +43,10 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 	// What happens on launch
 	@Override
 	public void start(Stage primaryStage)throws Exception{
+		// Initialize Files
+		createFile();								// Create Options.txt if it doesn't exist
+		DatabaseUse.initialize();					// Create Scores.db if it doesn't exist
+		
 		// Initiate stage
 		primaryStage.setTitle("Snek Game");			// Title
 		primaryStage.setResizable(false);			// Static window size
@@ -47,9 +54,6 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 		// Set stage and display
 		primaryStage.setScene(new Scene(startLoader.load()));
 		primaryStage.show();
-
-		// Initialize Database
-		DatabaseUse.initialize();
 	}
 
 	// Calculate blocksize
@@ -65,7 +69,7 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 	}
 
 	// Launch game play scene
-	private void start(Button button) throws Exception {
+	private void start(Button button) throws Exception {		
 		br = new BufferedReader(new FileReader("Options.txt"));	 	// Read options from file
 
 		// Load game controller
@@ -75,7 +79,7 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 		// Initiate Game
 		play.colour = br.readLine();								// Store Colour
 		play.speed = Double.parseDouble(br.readLine());				// Store Speed
-		play.blockSize = size(br.readLine());						// Store Size
+		PlayController.blockSize = size(br.readLine());						// Store Size
 		play.infiniteWindow = Boolean.parseBoolean(br.readLine());	// Store Border rules
 		play.launch(button);										// Launch Game
 
@@ -135,6 +139,19 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 		}
 		catch (Exception e){
 			System.out.println("Something went wrong: " + e.getMessage());
+		}
+	}
+	
+	// Check if options.txt exists, and creates file if it doesn't
+	public static void createFile() throws IOException {
+		File options = new File("Options.txt");
+		
+		if(!options.exists()){
+			options.createNewFile();
+			
+			PrintWriter writer = new PrintWriter("Options.txt", "UTF-8");
+			writer.println("Black\n0.1\nDefault\nfalse");
+			writer.close();
 		}
 	}
 }

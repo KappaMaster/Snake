@@ -1,4 +1,4 @@
 Black
-0.11044776119402985
-Big
+0.1
+Default
 false

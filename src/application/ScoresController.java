@@ -76,7 +76,7 @@ public class ScoresController {
 		// Initiate Game
 		play.colour = br.readLine();							// Store colour
 		play.speed = Double.parseDouble(br.readLine());			// Store speed
-		play.blockSize = Main.size(br.readLine());				// Store Size
+		PlayController.blockSize = Main.size(br.readLine());	// Store Size
 		play.launch(button);									// Launch Game
 
 		// Make Scene Visible

@@ -18,7 +18,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -110,6 +109,8 @@ public class PlayController{
 			case RIGHT:
 				tail.setTranslateX(snake.get(0).getTranslateX() + blockSize);
 				tail.setTranslateY(snake.get(0).getTranslateY());
+				break;
+			default:
 				break;
 		}
 
@@ -238,9 +239,20 @@ public class PlayController{
 			if (!moved)
 				return;
 			
-			// If pressed P, pause game
-			if (event.getCode().equals(KeyCode.P))
-				paused = !paused;					// Toggle state of boolean
+			// Do action on these keycodes regardless of pause state
+			switch (event.getCode()) {
+				case P:								// Pause game
+					paused = !paused;				// Toggle state of boolean
+					break;
+				case R:								// Restart Game
+					restartGame();
+					break;
+				case Q:								// Quit Game
+					endGame();
+					break;
+				default:
+					break;
+			}
 			
 			// If game is not paused, change direction
 			if(!paused)
@@ -265,18 +277,10 @@ public class PlayController{
 						if(direction != Direction.LEFT)
 							direction = Direction.RIGHT;
 						break;
+					default:
+						break;
 				}
 			
-			// Do action on these keycodes regardless of pause state
-			switch (event.getCode()) {
-				case R:
-					restartGame();
-					break;
-				case Q:
-					endGame();
-					break;
-			}
-
 			// Request new move animation
 			moved = false;
 		});
